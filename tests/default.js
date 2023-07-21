@@ -1,9 +1,20 @@
-const express = require(`express`);
+import express from 'express';
 const app = express();
 
-const safepassage = require(`../index`);
+import SafePassage from '../index.js';
 
-app.use(safepassage);
+app.use(SafePassage({
+    header: true,
+    error: true,
+    valid: true,
+    caching: true,
+    limit: {
+        windowMs: 15 * 60 * 1000,
+        max: 1000
+    },
+    session_key: `testkey`,
+    compress: true
+}));
 
 app.get(`/`, (req, res) => {
     res.setHeader(`Content-type`, `application/json`);
